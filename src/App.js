@@ -6,7 +6,12 @@ import CourseDetails from './Components/Courses/CourseDetails';
 
 function App() {
   return (
-   
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courseDetails/:courseId" element={<CourseDetails/>} />
+      </Routes>
+    </div>
   );
 }
 
