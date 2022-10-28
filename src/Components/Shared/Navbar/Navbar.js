@@ -4,15 +4,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo.jpg';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
-import { AuthContext } from '../../../Context/AuthProvider';
+import { auth, AuthContext } from '../../../Context/AuthProvider';
+import Loading from '../Loading';
 
 
 const Navbar = () => {
   const [changeHeader, setChangeHeader] = useState(false);
-  const {user} = useContext(AuthContext);
-  const image = user?.photoURL;
+  const {user,loading} = useContext(AuthContext);
   const navigate = useNavigate();
   
+  if(loading){
+    return <Loading/>
+  }
 
   const onChangeHeader = () => {
     if (window.scrollY >= 50) {
@@ -22,6 +25,8 @@ const Navbar = () => {
     }
   }
   window.addEventListener('scroll', onChangeHeader);
+
+
   const handleSignOut = () =>{
     Swal.fire({
       icon: "warning",
@@ -30,12 +35,11 @@ const Navbar = () => {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        // signOut(auth);
+        signOut(auth);
         navigate('/');
         Swal.fire("Logged Out Successfully!", "", "success");
       }
     });
-    // localStorage.removeItem('accessToken');
     
   }
   
@@ -46,7 +50,7 @@ const Navbar = () => {
         <li><a href="#testimonials">Testimonials</a></li>
         <li className='px-2 focus:bg-acent'><a href="#contact">Contact Us</a></li>
         {
-          user?
+          user?.uid?
          
           <div className='lg:flex justify-center items-center'>
             <div>
@@ -56,7 +60,7 @@ const Navbar = () => {
             <label tabIndex="0" className="cursor-pointer">
               <div className='avatar px-5 lg:px-0'>
               <div className="w-10 rounded-full ring ring-primary">
-                <img className='object-contain rounded-full' src={image} />
+                <img className='object-contain rounded-full' src={user?.photoURL} />
               </div>
             </div></label>
             <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -83,7 +87,7 @@ const Navbar = () => {
         <div>
         <div className='avatar flex items-center justify-center my-3'>
               <div className="w-20 rounded-full ring ring-primary">
-                <img className='object-contain rounded-full' src={image} />
+                <img className='object-contain rounded-full' src={user?.photoURL} />
                 
               </div>
         </div>
@@ -104,7 +108,7 @@ const Navbar = () => {
         <li className='px-2 focus:bg-acent'><a href="#contact">Contact Us</a></li>
            
           {
-           user?
+           user?.uid?
            
             <div>
           <li className='px-2 focus:bg-acent'><Link to = "/dashboard">Dashboard</Link></li>

@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Navbar from '../Components/Shared/Navbar/Navbar';
 import Courses from '../Components/Courses/Courses';
 
 const Home = () => {
@@ -25,7 +23,6 @@ const Home = () => {
   }
   return (
     <div>
-      <Navbar/>
       <Courses courses={courses}/>
     </div>
   );

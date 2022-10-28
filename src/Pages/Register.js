@@ -1,14 +1,18 @@
 import React, { useState }  from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { useContext } from 'react';
+import { AuthContext } from './../Context/AuthProvider';
+import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { toast } from 'react-toastify';
 import Loading from '../Components/Shared/Loading';
 
 const Register = () => {
-    // const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-    const[regiloading,setRegiLoading] = useState(false);
-    const imgStorageKey ='e45298c57c6b915f179ec8d9543b8284';
-
-
+    const [loading,setLoading] = useState(false);
+    const {user,providerLogin,createUser,updateUser} = useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+    
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     // const [
@@ -26,72 +30,59 @@ const Register = () => {
     let signInError;
     const navigate = useNavigate();
 
-
-    // if (updating  || loading || gLoading ||regiloading) {
-    //     return <Loading/>
-    // }
-
     // if(error || gError || uError){
     //     signInError= <p className='text-red-500'><small>{error?.message || gError?.message || uError.message }</small></p>
     // }
     // if(token){
     //     navigate('/');
     // }
-
-    /**
-     * 3 ways to store images
-     * 1. use third party storage //free open public storage is ok htmlFor practise project..but.not htmlFor real world websites
-     * 2.Your own storage in your own server(file system)
-     * 3. Database :mongodb //we are using  mongodb free.. so the verifing, sizing, or validate images is much tricky than email or password
-     * 
-     * THere are some systems htmlFor doing it like:--
-     * 1.YUP: to validate file :  Search : Yup file validation htmlFor react hook form
-     * 
-     * But now we will use third party storage like imgbb
-    */
-
-    const onSubmit =async data => {
-        setRegiLoading(true);
-        const image= data.image[0];
-        const url = `https://api.imgbb.com/1/upload?key=${imgStorageKey}`;
-        let img;
-        const formData = new  FormData(); //this thing is coming from uploading a file.. mozila cdn docs
-        formData.append('image',image);
-        await fetch(url,{
-            method:'POST',
-            body: formData,
+    if(user){
+        navigate('/');
+    }   
+    const onSubmit =data => {
+        setLoading(true);
+        createUser(data.email, data.password)
+        .then(result => {
+            updateUser({ displayName: data.name ,photoURL:data.image})
+            .then(()=>toast.success("registration successfull"))
+            .then(()=>setLoading(false))
+            .catch(error=>{
+                toast.error(error.message)
+                console.log(error.message)
+            })
         })
-        .then(res=>res.json())
-        .then(result=>{
-             if(result.success){
-               img= result.data.url;
-            }
-            console.log(result);
-        });
-        // await createUserWithEmailAndPassword(data.email, data.password);
-        // await updateProfile({ displayName: data.name ,photoURL:img});
-        setRegiLoading(false);
-        const currentUser = {
-            name : data.name,
-            img : img,
-        };
-        await fetch(`https://mighty-garden-92013.herokuapp.com/user/${data.email}`,{
-            method : 'PUT',
-            headers:{
-                'content-type' :'application/json'
-            },
-            body: JSON.stringify(currentUser)
+        .catch(error=>toast.error(error.message))
+        updateUser({ displayName: data.name ,photoURL:data.image})
+        .then(()=>toast.success("registration successfull"))
+        .then(()=>setLoading(false))
+        .catch(error=>{
+            toast.error(error.message)
+            console.log(error.message)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log('data inside useToken',data);
-            
-        //     const accessToken = data.token;
-        //     localStorage.setItem('accessToken',accessToken);
-        });
+          
+    }
+    if(loading){
+        return <div>Loading....</div>
     }
 
-    
+
+    const handleGoogleSignIn=()=>{
+        providerLogin(googleProvider)
+        .then(result=>{
+            const user = result.user;
+            console.log(user);
+        })
+        .then(error =>toast.error(error.message))
+    }
+
+    const handleGitHubSignIn=()=>{
+        providerLogin(githubProvider)
+        .then(result=>{
+            const user = result.user;
+            console.log(user);
+        })
+        .then(error =>toast.error(error.message))
+    }
     
     return (
         <div className='hero min-h-screen bg-base-200 py-20'> 
@@ -175,15 +166,16 @@ const Register = () => {
                         {/* Photo upload */}
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
-                                <span className="label-text">Photo</span>
+                                <span className="label-text">Photo Url</span>
                             </label>
                             <input
-                                type="file"
-                                className="p-3 border-2 rounded-xl w-full max-w-xs focus:outline-none"
+                                type="text"
+                                placeholder="Photo Url"
+                                className="input input-bordered w-full max-w-xs focus:outline-none"
                                 {...register("image", {
                                     required: {
                                         value: true,
-                                        message: 'Image is Required'
+                                        message: 'Photo Url is Required'
                                     }
                                 })}
                             />
@@ -191,15 +183,38 @@ const Register = () => {
                                 {errors.image?.type === 'required' && <span className="label-text-alt text-red-500">{errors.image.message}</span>}
                             </label>
                         </div>
+                        {/* <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Photo Url</span>
+                            </label>
+                            <input
+                                type="text"
+                                className="input input-bordered w-full max-w-xs focus:outline-none"
+                                placeholder='Photo Url'
+                                {...register("image", {
+                                    required: {
+                                        value: true,
+                                        message: 'photoUrl is Required'
+                                    }
+                                })}
+                            />
+                            <label className="label">
+                                {errors.image?.type === 'required' && <span className="label-text-alt text-red-500">{errors.image.message}</span>}
+                            </label> */}
+                        {/* </div> */}
                         {signInError}
                         <input className='btn btn-primary w-full max-w-xs text-white' type="submit" value="Register" />
                     </form>
                      <Link to="/login"><p className='btn-animate text-center text-sm font-semibold text-gray-600 cursor-pointer'>Already Regisred? <span className='text-primary'>Please Login</span></p></Link>
                     <div className="divider">OR</div>
                     <button
-                        // onClick={() => signInWithGoogle()}
+                        onClick={handleGoogleSignIn}
                         className="btn btn-outline btn-primary"
                     >Continue with Google</button>
+                    <button
+                        onClick={handleGitHubSignIn}
+                        className="btn btn-outline btn-primary"
+                    >Continue with GitHub</button>
                 </div>
             </div>
         </div >
