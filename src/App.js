@@ -1,15 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import CourseDetails from './Components/Courses/CourseDetails';
 
 function App() {
   return (
     <div className="App">
-      
-
-      <img class="w-10 h-10 rounded-full" src={logo} alt="Rounded avatar"/>
-<img class="w-10 h-10 rounded" src={logo} alt="Default avatar"/>
-
-
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/courseDetails/:courseId" element={<CourseDetails/>} />
+      </Routes>
     </div>
   );
 }
