@@ -10,6 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Components/Shared/Navbar/Navbar';
 import RequireAuth from "./RequireAuth/RequireAuth";
 import Payment from './Pages/Payment';
+import MyProfile from "./Pages/MyProfile";
+import AllCourse from "./Pages/AllCourse";
+import Blog from "./Pages/Blog";
 
 
 function App() {
@@ -21,7 +24,11 @@ function App() {
         <Route path="/courseDetails/:courseId" element={<CourseDetails/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/blog" element={<Blog/>} />
+        <Route path="/allCourse" element={<AllCourse/>} />
+        <Route path="/profile" element={<MyProfile/>} />
         <Route path="/payment" element={<RequireAuth><Payment/></RequireAuth>} />
+        <Route path="/profile" element={<RequireAuth><Payment/></RequireAuth>} />
       </Routes>
       <ToastContainer />
     </div>
