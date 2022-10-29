@@ -1,12 +1,12 @@
 import { initializeApp } from "firebase/app";
 const firebaseConfig = {
-  apiKey: "AIzaSyAWxQcIUoiUh7StVn_Whuf8vvvCcF-d9po",
-  authDomain: "eschool-bd.firebaseapp.com",
-  projectId: "eschool-bd",
-  storageBucket: "eschool-bd.appspot.com",
-  messagingSenderId: "816473128075",
-  appId: "1:816473128075:web:d513a138b07c33d689688e",
-  measurementId: "G-6B39NJFXV2"
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId
 };
 
 // Initialize Firebase
