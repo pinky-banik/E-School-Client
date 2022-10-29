@@ -81,11 +81,11 @@ const Register = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">Name</span>
+                    <span className="label-text">Full Name</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="Your Name"
+                    placeholder="Full Name"
                     className="input input-bordered w-full max-w-xs focus:outline-none"
                     {...register("name", {
                       required: {
