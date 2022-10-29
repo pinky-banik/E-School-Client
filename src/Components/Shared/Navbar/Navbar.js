@@ -46,9 +46,9 @@ const Navbar = () => {
   const menuItemslg =
   <>
         <li className='px-2 focus:bg-acent'><Link to = "/">Home</Link></li>
-        <li className='px-2 focus:bg-acent'><a href="#service">Services</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li className='px-2 focus:bg-acent'><a href="#contact">Contact Us</a></li>
+        <li className='px-2 focus:bg-acent'><a href="/courses">Courses</a></li>
+        <li><a href="/blogs">Blog</a></li>
+        <li className='px-2 focus:bg-acent'><a href="/faq">FAQ</a></li>
         {
           user?.uid?
          
@@ -56,11 +56,11 @@ const Navbar = () => {
             <div>
             <h1 className='p-2 font-bold text-primary lg:text-primary px-4'>{user?.displayName}</h1>
             </div>
-            <div className="dropdown lg:dropdown-end">
+            <div  className="dropdown lg:dropdown-end">
             <label tabIndex="0" className="cursor-pointer">
               <div className='avatar px-5 lg:px-0'>
-              <div className="w-10 rounded-full ring ring-primary">
-                <img className='object-contain rounded-full' src={user?.photoURL} />
+              <div className="w-10 rounded-full ring ring-primary"  title={user?.displayName}>
+                <img className='object-contain rounded-full'  src={user?.photoURL} />
               </div>
             </div></label>
             <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -101,16 +101,14 @@ const Navbar = () => {
         </div>
        }
         <li className='px-2 focus:bg-acent'><Link to = "/">Home</Link></li>
-        <li className='px-2 focus:bg-acent'><Link to = "/service">Services</Link></li>
-        <li className='px-2 focus:bg-acent'><a href="#service">Services</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
-        <li className='px-2 focus:bg-acent'><a href="#contact">Contact Us</a></li>
+        <li className='px-2 focus:bg-acent'><Link to = "/courses">Courses</Link></li>
+        <li  className='px-2 focus:bg-acent'><Link to = "/blog">Blog</Link></li>
+        <li className='px-2 focus:bg-acent'><Link to = "/faq">FAQ</Link></li>
            
           {
            user?.uid?
            
             <div>
-          <li className='px-2 focus:bg-acent'><Link to = "/dashboard">Dashboard</Link></li>
           <li><button onClick={handleSignOut} className='btn w-full btn-primary cursor-pointer text-white'>Logout</button></li>  
           </div>  :
           <div>

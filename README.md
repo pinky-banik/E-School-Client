@@ -1,14 +1,27 @@
-# Website name : "Quiz Master"
+# Website name : "E-School"
  
-# Live site link : https://quiz-master-bd.netlify.app/
+# Live site link : https://eschool-bd.web.app/
  
 # Description :
-Quiz Master is a quiz website. Here you find quizzes over any topic. There are different routes for every topic.In different routes you get different quizzes over the topic. When you click any of the quiz answers you get a toast of if it is the correct answer or wrong answer. And here is also an eye button if you want to see the correct answer. Here is also a statistics page and blog page. Where you can see the statistics of out total quizzes over any topics.
+
+E-School is an e-learning platform. Where you can find difference courses for different technologies. Every course has an course details page. Payment page is protected by private route without authentication no one can acess to this page. Blog page to different blogs. The course data are coming from the api from its express backend.
  
 # Features :
  
 1. Responsive single page application.
 2. Different routes for different pages, dynamic route and an error route.
-3. React toast to show different information.
-4. Chart made with rechart to show total quiz over any topic.
+3. React toast to show error messages related to authentication while login and register any user.
+4. private route to payment page after select any course to buy.
 5. Blogs page to show different blogs about react-router.
+
+# Technology Used :
+
+1. React
+2. Node
+3. Express
+4. toastify
+5. sweetalert2
+6. react-hook-form
+7. firebase-auth
+8. taiwind css
+9. etc..
