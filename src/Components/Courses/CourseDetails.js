@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CourseDetails = () => {
-  const {courseId} = useParams();
-  const [course,setCourse] = useState({});
-  const [loading,setLoading] = useState(false);
+  const { courseId } = useParams();
+  const [course, setCourse] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const {id,
+  const {
+    id,
     img,
     title,
     desc,
@@ -15,19 +16,20 @@ const CourseDetails = () => {
     provider,
     rating,
     ratingcount,
-    sellerThumb} = course;
+    sellerThumb,
+  } = course;
 
-  useEffect(()=>{
-    fetch(`http://localhost:5000/courses/${courseId}`)
-    .then(res=>res.json())
-    .then(data=>{
-      setCourse(data);
-      setLoading(false);
-    })
-  },[courseId]);
+  useEffect(() => {
+    fetch(`https://eschool-server.vercel.app/courses/${courseId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setCourse(data);
+        setLoading(false);
+      });
+  }, [courseId]);
 
-  if(loading){
-    return <div>Loading...</div>
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -52,8 +54,8 @@ const CourseDetails = () => {
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
               ${price}
             </span>
-            <button onClick={()=>navigate(`/payment`)}
-              
+            <button
+              onClick={() => navigate(`/payment`)}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               payment
