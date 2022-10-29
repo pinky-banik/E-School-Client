@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import auth from '../Firebase/Config';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import loader from '../assets/images/22.gif';
+import { auth, AuthContext } from '../Context/AuthProvider';
  
  
 const RequireAuth = ({children}) => {
-    const [user,loading] = useAuthState(auth);
+    const {user} = useContext(AuthContext);
     let location = useLocation();
-   if (loading ) {
-      return <div className='flex h-screen justify-center    items-center'><img  src={loader} alt="" /></div>
-    }
  
  
     if (!user) {
