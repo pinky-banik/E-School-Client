@@ -22,8 +22,9 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
 
   if(user){
-    navigate('/');
-  }  
+    navigate(from, { replace: true });
+}
+
   const onSubmit = (data) => {
     signin(data.email, data.password);
     if(user){
