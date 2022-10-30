@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { auth, AuthContext } from '../../../Context/AuthProvider';
 import Loading from '../Loading';
+import ToggoleButton from './ToggoleButton';
 
 
 const Navbar = () => {
@@ -49,18 +50,19 @@ const Navbar = () => {
         <li className='px-2 focus:bg-acent'><a href="/courses">Courses</a></li>
         <li><a href="/blogs">Blog</a></li>
         <li className='px-2 focus:bg-acent'><a href="/faq">FAQ</a></li>
+        <li className='list-none '><ToggoleButton/></li>
         {
           user?.uid?
          
           <div className='lg:flex justify-center items-center'>
             <div>
-            <h1 className='p-2 font-bold text-primary lg:text-primary px-4'>{user?.displayName}</h1>
+            <h1 className='p-2 font-bold text-primary lg:text-primary px-4 lg:hidden xl:block'>{user?.displayName}</h1>
             </div>
             <div  className="dropdown lg:dropdown-end">
             <label tabIndex="0" className="cursor-pointer">
-              <div className='avatar px-5 lg:px-0'>
+              <div className='avatar mx-1 px-5 lg:px-0'>
               <div className="w-10 rounded-full ring ring-primary"  title={user?.displayName}>
-                <img className='object-contain rounded-full'  src={user?.photoURL} />
+                <img className='object-contain rounded-full '  src={user?.photoURL} />
               </div>
             </div></label>
             <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -123,12 +125,16 @@ const Navbar = () => {
             <label tabIndex="0" className="btn bg-transparent border-none hover:btn-primary lg:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </label>
+          
+          
           <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2  bg-base-100 rounded-box w-64 shadow-lg ">
             {menuItemsSm}
           </ul>
         </div>
-        <div className='flex justify-start items-start '><Link to='/' className="normal-case flex justify-center items-center text-xl "><img className='h-10 ' src={logo} alt="Jerin's Parlour" /><h1 className='mx-2 font-bold'>E-School</h1></Link> </div>
+        <div className='flex justify-start items-start '><Link to='/' className="normal-case flex justify-center items-center text-xl "><img className='h-10 ' src={logo} alt="E-School" /><h1 className='mx-2 font-bold'>E-School</h1></Link> </div>
       </div>
+      <div className="navbar-end lg:hidden px-5"><ToggoleButton />
+          </div>
       {/* large device */}
       <div className="navbar-end lg:flex hidden">
         <ul className="menu menu-horizontal p-0">
