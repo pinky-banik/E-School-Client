@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import Rating from "react-rating";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Pdf from "react-to-pdf";
+
+const ref = React.createRef();
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -15,7 +20,7 @@ const CourseDetails = () => {
     price,
     provider,
     rating,
-    ratingcount,
+    ratingCount,
     sellerThumb,
   } = course;
 
@@ -33,35 +38,49 @@ const CourseDetails = () => {
   }
 
   return (
-    <div>
-      <div className="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-          <img className="p-8 rounded-t-lg" src={img} alt="product image" />
-        </a>
-        <div className="px-5 pb-5">
-          <a href="#">
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {title}
-            </h5>
-          </a>
-          <div className="flex items-center mt-2.5 mb-5">
-            {rating}
+    <div  className="p-20 mb-20 text-start lg:w-3/4 mx-auto flex-col justify-center items-center flex">
+      <Pdf targetRef={ref} filename="code-example.pdf">
+        {({ toPdf }) => <button className="py-3 btn btn-secondary m-3" onClick={toPdf}>Download as PDF</button>}
+      </Pdf>
+      <div ref={ref}>
+      <img src={img} alt="" />
+      
+      <h1 className="p-5 font-extrabold text-primary text-3xl">{title}</h1>
+      <p className="text-lg pt-5 mt-5"><span className="font-bold text-primary ">Description : </span> {desc}</p>
+      
+      <div className="flex items-center  mt-2.5 mb-5 font-bold">
+      
+          <Rating className="text-2xl text-yellow-300"
+                    initialRating={rating}
+                    readonly
+                    emptySymbol={
+                      <AiOutlineStar />
+                    }
+                    fullSymbol={
+                      <AiFillStar/>
+                    }
+                  />
+
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
-              {rating}
+              {rating} 
             </span>
+            ({ratingCount})
+            
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              ${price}
-            </span>
-            <button
-              onClick={() => navigate(`/payment`)}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              payment
-            </button>
+          <h1 className="text-3xl font-extrabold"><span className="text-primary text-2xl font-bold">Price :</span> ${price}</h1>
+          <div className="w-full my-5 border-2 rounded p-5 border-primary">
+            <h1 className="text-center text-2xl font-extrabold text-primary">Seller 
+            Details</h1>
+            <div className="flex justify-center items-center">
+              <div className=" flex flex-col justify-center items-center">
+              <img className="rounded-full w-24 my-5" src={sellerThumb } alt="" />
+              <h1 className="text-xl font-extrabold text-primary ">Provider : <span className="text-black">{provider}</span></h1>
+              </div>
+              
+            </div>
+            
           </div>
-        </div>
+          <Link className="btn btn-primary text-white w-full py-2 " to="/payment">Get Premium Access</Link>
       </div>
     </div>
   );

@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import CourseDetails from './Components/Courses/CourseDetails';
@@ -14,6 +12,7 @@ import MyProfile from "./Pages/MyProfile";
 import AllCourse from "./Pages/AllCourse";
 import Blog from "./Pages/Blog";
 import Error from "./Pages/Error";
+import Checkout from "./Pages/Checkout";
 
 
 function App() {
@@ -30,6 +29,8 @@ function App() {
         <Route path="/profile" element={<MyProfile/>} />
         <Route path="/payment" element={<RequireAuth><Payment/></RequireAuth>} />
         <Route path="/profile" element={<RequireAuth><Payment/></RequireAuth>} />
+        <Route path='*' element={<Error/>}/>
+        <Route path="/checkout" element={<RequireAuth><Checkout/></RequireAuth>} />
         <Route path='*' element={<Error/>}/>
       </Routes>
       <ToastContainer />

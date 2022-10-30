@@ -48,9 +48,9 @@ const Navbar = () => {
   <>
         <li className='px-2 focus:bg-acent'><Link to = "/">Home</Link></li>
         <li className='px-2 focus:bg-acent'><a href="/courses">Courses</a></li>
-        <li><a href="/blogs">Blog</a></li>
+        <li><a href="/blog">Blog</a></li>
         <li className='px-2 focus:bg-acent'><a href="/faq">FAQ</a></li>
-        <li className='list-none '><ToggoleButton/></li>
+        <li><ToggoleButton/></li>
         {
           user?.uid?
          
@@ -97,7 +97,7 @@ const Navbar = () => {
         <p className='text-sm text-gray-500 text-center'>{user?.email}</p>
  
         <div className='flex justify-center items-center my-3'>
-        <Link  to = "/"><button className='btn-primary text-white px-10 py-2 rounded-full text-center' >My Profile</button></Link>
+        <Link  to = "/profile"><button className='btn-primary text-white px-10 py-2 rounded-full text-center' >My Profile</button></Link>
         </div>
         <div className='border-b-2 my-2'></div>
         </div>
