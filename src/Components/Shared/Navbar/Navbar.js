@@ -47,10 +47,10 @@ const Navbar = () => {
   const menuItemslg =
   <>
         <li className='px-2 focus:bg-acent'><Link to = "/">Home</Link></li>
-        <li className='px-2 focus:bg-acent'><a href="/courses">Courses</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li className='px-2 focus:bg-acent'><a href="/faq">FAQ</a></li>
-        <li><ToggoleButton/></li>
+        <li className='px-2 focus:bg-acent'><Link to ="/courses">Courses</Link></li>
+        <li><Link to="/blog">Blog</Link></li>
+        <li className='px-2 focus:bg-acent'><Link to="/faq">FAQ</Link></li>
+        {/* <p className='lg:flex hidden justify-center items-center m-2'><ToggoleButton/></p> */}
         {
           user?.uid?
          
@@ -119,8 +119,8 @@ const Navbar = () => {
           </div>}
         </>
     return (
-      <div className={changeHeader ? "bg-secondary  w-full shadow-md transition duration-700 navbar z-50  fixed lg:px-20" : "bg-transparent w-full  transition duration-700 navbar lg:px-20 z-50"}>
-      <div className="navbar-start my-2">
+      <div className={changeHeader ? "bg-secondary  w-full shadow-md transition duration-700 navbar z-50  fixed lg:px-20 top-0" : "bg-transparent w-full  transition duration-700 navbar lg:px-20 z-50 shadow-lg top-0"}>
+      <div className="navbar-start my-2 ">
         <div className="dropdown ">
             <label tabIndex="0" className="btn bg-transparent border-none hover:btn-primary lg:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
@@ -130,10 +130,11 @@ const Navbar = () => {
           <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2  bg-base-100 rounded-box w-64 shadow-lg ">
             {menuItemsSm}
           </ul>
+          
         </div>
         <div className='flex justify-start items-start '><Link to='/' className="normal-case flex justify-center items-center text-xl "><img className='h-10 ' src={logo} alt="E-School" /><h1 className='mx-2 font-bold'>E-School</h1></Link> </div>
       </div>
-      <div className="navbar-end lg:hidden px-5"><ToggoleButton />
+      <div className="navbar-end px-5"><ToggoleButton />
           </div>
       {/* large device */}
       <div className="navbar-end lg:flex hidden">
